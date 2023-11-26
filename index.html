@@ -3,16 +3,52 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css">
+    
     <link rel="stylesheet" href="./style.css" />
     <title>Weather Dashboard</title>
 </head>
-<body class="flex-column min-80-vh">
+<body>
     <header class="hero">
       <h1 class="page-title">Weather Dashboard</h1>
     </header>
 
-<body>
-    
+    <!--Search bar for entering city-->
+    <form class="col g-3">
+        <div class="col-auto">
+          <input type="text" readonly class="form-control-plaintext" id="staticLabel2" value="Search for a City">
+        </div>
+        <div class="col g-3">
+          <label for="inputCity" class="visually-hidden">City</label>
+          <input type="password" class="form-control" id="inputPassword2" placeholder="City Name">
+        </div>
+        <div class="col-auto">
+          <button type="search" class="btn btn-primary mb-3">Search</button>
+        </div>
+      </form>
+
+<!--weather from a city-->
+<div class="card mb-3" style="max-width: 540px;">
+    <div class="row g-0">
+      <div class="col-md-4">
+        <img src="..." class="img-fluid rounded-start" alt="...">
+      </div>
+      <div class="col-md-8">
+        <div class="card-body">
+          <h5 class="card-title">Card title</h5>
+          <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+          <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+        </div>
+      </div>
+    </div>
+  </div>
+                </div>
+              </div>
+      
+            </div>
+          </div>
+      
+        </div>
+      </section>
 </body>
 </html>
