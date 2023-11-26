@@ -8,7 +8,6 @@
 .hero {
     padding: 2% 3%;
     background-color: var(--dark);
-    background-blend-mode: hard-light;
     color: var(--primary);
   }
 
