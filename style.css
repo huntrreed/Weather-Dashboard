@@ -1,0 +1,23 @@
+:root {
+    --dark: rgb(26, 26, 209);
+    --light: white;
+    --dark-blue: #0d3978;
+    --border-radius: .3rem;
+  }
+
+.hero {
+    padding: 2% 3%;
+    background-color: var(--dark);
+    background-blend-mode: hard-light;
+    color: var(--primary);
+  }
+
+  .page-title {
+    font-size: 2.5rem;
+    background-color: var(--dark);
+    color: var(--light);
+    padding: 0 0;
+    display: flex;
+    justify-content: center;
+    border-radius: var(--border-radius);
+  }
