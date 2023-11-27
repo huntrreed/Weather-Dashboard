@@ -48,48 +48,59 @@ function getWeather(latitude, longitude) {
     .catch(error => {
         console.error('Error fetching weather: ', error);
     });
+    getForecast(lat, lon);
 }
-
+//*display current weather for the city in the current weather box//
 function displayCurrentWeather(weatherData) {
     console.log(weatherData);
     var weatherCard = document.getElementById('current-weather-card')
-    weatherCard.querySelector('.card-title').textContent = `Weather in ${weatherData.name}`;
+    weatherCard.querySelector('.card-title').textContent = `Current Weather in ${weatherData.name}`;
     weatherCard.querySelector('.card-text').textContent = `Temperature: ${weatherData.main.temp}°F`;
 }
-/*var getWeather = function (CityName) {
-    var apiURL = api.openweathermap.org/data/2.5/forecast?lat={lat}&lon={lon}&appid={API key};
 
-    fetch(apiURL)
-    .then(function(response){
-        if (response.ok){
-            response.json().then(function (data)) {
-                displayWeather(data,cityName);
-            });
-            } else {
-            alert('Error:' + response.StatusText)
-            }
+//5 Day Forecast//
+function getForecast(latitude, longitude) {
+    var apiKey = '91ce4240cdd8015ed3ef68dc83c67b37'; 
+    var forecastApiUrl = `https://api.openweathermap.org/data/2.5/forecast?lat=${latitude}&lon=${longitude}&appid=${apiKey}&units=imperial`;
 
-        .catch(function (error){
-            alert('Unable to get weather data');
-        });
-*/
-
-function loadSearchHistory() {
-    let history = JSON.parse(localStorage.getItem('searchHistory')) || [];
-    let historyContainer = document.getElementById('search-history'); // Make sure this ID exists in your HTML
-    historyContainer.innerHTML = ''; // Clear existing content
-
-    history.forEach(city => {
-        let cityElement = document.createElement('button');
-        cityElement.textContent = city;
-        cityElement.classList.add('list-group-item', 'list-group-item-action');
-        cityElement.onclick = function() {
-            getGeoLocation(city); // Fetch weather data for the clicked city
-        };
-        historyContainer.appendChild(cityElement);
+    fetch(forecastApiUrl)
+    .then(response => response.json())
+    .then(data => {
+        display5DayForecast(data);
+    })
+    .catch(error => {
+        console.error('Error fetching 5-day forecast:', error);
     });
-window.onload = function() {
-    loadSearchHistory();
- };
 }
+function display5DayForecast(forecastData) {
+    for (let i = 0; i < 5; i++) {
+        const dailyData = forecastData.list.filter((reading) => reading.dt_txt.includes(`12:00:00`));
+        const dayCard = document.getElementById(`day${i+1}`);
+        dayCard.querySelector('.card-title').textContent = `Day ${i+1}`;
+        dayCard.querySelector('.card-temp').textContent = `Temp: High of ${dailyData[i].main.temp_max}°F / Low of ${dailyData[i].main.temp_min}°F`;
+        dayCard.querySelector('.card-wind').textContent = `Wind: ${dailyData[i].wind.speed} mph`;
+        dayCard.querySelector('.card-humidity').textContent = `Humidity: ${dailyData[i].main.humidity}%`;
+    }
+}
+
+
+//WORKING ON THIS STILL ***********
+// function loadSearchHistory() {
+//     let history = JSON.parse(localStorage.getItem('searchHistory')) || [];
+//     let historyContainer = document.getElementById('search-history'); // Make sure this ID exists in your HTML
+//     historyContainer.innerHTML = ''; // Clear existing content
+
+//     history.forEach(city => {
+//         let cityElement = document.createElement('button');
+//         cityElement.textContent = city;
+//         cityElement.classList.add('list-group-item', 'list-group-item-action');
+//         cityElement.onclick = function() {
+//             getGeoLocation(city); // Fetch weather data for the clicked city
+//         };
+//         historyContainer.appendChild(cityElement);
+//     });
+// window.onload = function() {
+//     loadSearchHistory();
+//  };
+// }
 
