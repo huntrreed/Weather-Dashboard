@@ -1,6 +1,9 @@
 var 
 var
-var getWeather = function (CityName) {
+
+document.GetElementbyID('search-form')
+
+/*var getWeather = function (CityName) {
     var apiURL = api.openweathermap.org/data/2.5/forecast?lat={lat}&lon={lon}&appid={API key};
 
     fetch(apiURL)
@@ -16,8 +19,4 @@ var getWeather = function (CityName) {
         .catch(function (error){
             alert('Unable to get weather data');
         });
-    }
-   
-    import { Ripple, initMDB } from "mdb-ui-kit";
-
-initMDB({ Ripple });
+*/
