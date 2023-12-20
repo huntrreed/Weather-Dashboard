@@ -38,3 +38,9 @@
 #current-weather-card .card-text p strong {
   font-weight: bold;
 }
+
+.city-button {
+  display: block;
+  width: 100%;
+  margin-bottom: 5px; 
+}

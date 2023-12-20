@@ -4,6 +4,35 @@ document.getElementById('search-form').addEventListener('submit', function(event
     var city = document.getElementById('city-input').value;
     getGeoLocation(city);
 });
+//Saving searched cities to local storage and displaying them (only the last 5 so it's not overwhelming)
+function saveToLocalStorage(cityName) {
+    let cities = JSON.parse(localStorage.getItem('searchedCities')) || [];
+    if (!cities.includes(cityName)) {
+        cities.push(cityName);
+        localStorage.setItem('searchedCities', JSON.stringify(cities));
+    }
+}
+//Adding the last 5 searched cities as buttons that can be clicked to show their weather data and forecasts again
+function loadFromLocalStorage() {
+    let cities = JSON.parse(localStorage.getItem('searchedCities')) || [];
+    let historyContainer = document.getElementById('search-history');
+    historyContainer.innerHTML = ''; 
+
+    cities.forEach(city => {
+        let cityButton = document.createElement('button');
+        cityButton.textContent = city;
+        cityButton.classList.add('btn', 'btn-secondary', 'city-button');
+        cityButton.onclick = function() {
+            getGeoLocation(city); 
+        };
+        historyContainer.appendChild(cityButton);
+    });
+}
+
+// Display search history when the page loads
+document.addEventListener('DOMContentLoaded', function() {
+    loadFromLocalStorage();
+});
 
 
 //*converting the location into lat and lon so it can work with the city location
@@ -18,6 +47,7 @@ function getGeoLocation(cityName) {
             const { lat, lon } = data[0];
             getWeather(lat, lon, cityName);
             getForecast(lat, lon);
+            saveToLocalStorage(cityName); // Save the city to local storage
         } else {
             console.error('Geolocation not found for the city:', cityName);
         }
@@ -81,7 +111,7 @@ function getForecast(latitude, longitude) {
         console.error('Error fetching 5-day forecast:', error);
  });
 }
-///////
+//Displaying forecast for 5 days
 function display5DayForecast(forecastData) {
     var forecastContainer = document.getElementById('forecast-container');
     forecastContainer.innerHTML = ''; // Clear previous forecast cards
