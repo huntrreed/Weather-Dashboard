@@ -1,8 +1,12 @@
 :root {
-    --dark: rgb(26, 26, 209);
+    --dark: rgb(10, 10, 234);
     --light: white;
     --dark-blue: #0d3978;
     --border-radius: .3rem;
+  }
+
+  html {
+    height: 100%;
   }
 
 .hero {
@@ -43,4 +47,31 @@
   display: block;
   width: 100%;
   margin-bottom: 5px; 
+}
+
+body {
+  position: relative;
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  width: 100%;
+}
+
+body::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-image: url('/Assets/background.jpg'); 
+  background-size: cover;
+  background-position: center;
+  opacity: 0.5; 
+  z-index: -1; 
+}
+
+.content {
+  position: relative;
+  z-index: 1;
 }
