@@ -38,7 +38,7 @@ document.addEventListener('DOMContentLoaded', function() {
 //*converting the location into lat and lon so it can work with the city location
 function getGeoLocation(cityName) {
     var apiKey = '91ce4240cdd8015ed3ef68dc83c67b37';
-    var geoApiUrl = `http://api.openweathermap.org/geo/1.0/direct?q=${cityName}&limit=1&appid=${apiKey}`;
+    var geoApiUrl = `https://api.openweathermap.org/geo/1.0/direct?q=${cityName}&limit=1&appid=${apiKey}`;
 
     fetch(geoApiUrl)
     .then(response => response.json())
@@ -61,7 +61,7 @@ function getGeoLocation(cityName) {
 function getWeather(latitude, longitude, cityName) {
     var apiKey = '91ce4240cdd8015ed3ef68dc83c67b37';
     var weatherApiURL = `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${apiKey}&units=imperial`;
-    var airQualityUrl = `http://api.openweathermap.org/data/2.5/air_pollution?lat=${latitude}&lon=${longitude}&appid=${apiKey}`;
+    var airQualityUrl = `https://api.openweathermap.org/data/2.5/air_pollution?lat=${latitude}&lon=${longitude}&appid=${apiKey}`;
     fetch(weatherApiURL)
     .then(response => response.json())
     .then(weatherData => {
@@ -86,7 +86,7 @@ function displayCurrentWeather(weatherData, cityName, aqData) {
     var windSpeed = weatherData.wind.speed;
     var humidity = weatherData.main.humidity;
     var iconCode = weatherData.weather[0].icon;
-    var iconUrl = `http://openweathermap.org/img/wn/${iconCode}.png`;
+    var iconUrl = `https://openweathermap.org/img/wn/${iconCode}.png`;
     var aqi = aqData.list[0].main.aqi; 
     var currentDate = new Date();
     var dateString = currentDate.toLocaleDateString('en-US', { month: 'long', day: 'numeric' });
@@ -125,7 +125,7 @@ function display5DayForecast(forecastData) {
         const date = new Date(dailyData.dt_txt);
         const formattedDate = `${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}`;
         const iconCode = dailyData.weather[0].icon;
-        const iconUrl = `http://openweathermap.org/img/wn/${iconCode}.png`;
+        const iconUrl = `https://openweathermap.org/img/wn/${iconCode}.png`;
 
         const cardHtml = `
             <div class="col">

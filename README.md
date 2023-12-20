@@ -22,6 +22,6 @@ Here is an example of the data displayed when you search for a city. As you can 
 
 ## Resources
 
-Weather API:
-Deployed GitHub Link
+[Weather API](https://openweathermap.org/api)
+[Deployed GitHub Link](https://huntrreed.github.io/Weather-Dashboard/)
 
