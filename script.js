@@ -48,20 +48,22 @@ function getWeather(latitude, longitude) {
 }
 
 function displayCurrentWeather(weatherData) {
-    if (weatherData) {
-        var weatherCard = document.getElementById('current-weather-card');
-        var currentTemp = weatherData.main.temp;
-        var windSpeed = weatherData.wind.speed;
-        var humidity = weatherData.main.humidity;
+    var weatherCard = document.getElementById('current-weather-card');
+    var currentTemp = weatherData.main.temp;
+    var windSpeed = weatherData.wind.speed;
+    var humidity = weatherData.main.humidity;
+    var iconCode = weatherData.weather[0].icon;
+    var iconUrl = `http://openweathermap.org/img/wn/${iconCode}.png`;
 
-        weatherCard.querySelector('.card-title').textContent = `Current Weather in ${weatherData.name}`;
-        weatherCard.querySelector('.card-text').innerHTML = `
-            <p>Temperature: ${currentTemp}°F</p>
-            <p>Wind: ${windSpeed} MPH</p>
-            <p>Humidity: ${humidity}%</p>
-        `;
-    }
+    weatherCard.querySelector('.card-title').textContent = `Current Weather in ${weatherData.name}`;
+    weatherCard.querySelector('.card-text').innerHTML = `
+        <img src="${iconUrl}" alt="Weather icon">
+        <p>Temperature: ${currentTemp}°F</p>
+        <p>Wind: ${windSpeed} MPH</p>
+        <p>Humidity: ${humidity}%</p>
+    `;
 }
+
 
 //5 Day Forecast//
 function getForecast(latitude, longitude) {
@@ -81,21 +83,19 @@ function display5DayForecast(forecastData) {
     var forecastContainer = document.getElementById('forecast-container');
     forecastContainer.innerHTML = ''; // Clear previous forecast cards
 
-    // Filter out the forecasts for 12 PM each day
     const dailyForecasts = forecastData.list.filter((reading) => reading.dt_txt.includes('12:00:00'));
-    
-    // Take the first 5 forecasts from the filtered array to give only 5 days of forecast
     dailyForecasts.slice(0, 5).forEach((dailyData, index) => {
-        // Convert the date text to a Date object and format it as MM/DD/YYYY
         const date = new Date(dailyData.dt_txt);
         const formattedDate = `${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}`;
+        const iconCode = dailyData.weather[0].icon;
+        const iconUrl = `http://openweathermap.org/img/wn/${iconCode}.png`;
 
-        // Create the card dynamically so it doesn't have to be done in HTML
         const cardHtml = `
             <div class="col">
                 <div class="card text-white bg-primary">
                     <div class="card-header">${formattedDate}</div>
                     <div class="card-body">
+                        <img src="${iconUrl}" alt="Weather icon">
                         <p class="card-text">Temp: ${dailyData.main.temp}°F</p>
                         <p class="card-text">Wind: ${dailyData.wind.speed} MPH</p>
                         <p class="card-text">Humidity: ${dailyData.main.humidity}%</p>
