@@ -1,54 +1,63 @@
 :root {
-    --dark: rgb(10, 10, 234);
-    --light: white;
-    --dark-blue: #0d3978;
-    --border-radius: .3rem;
-  }
+  --dark: rgb(10, 10, 234);
+  --light: white;
+  --dark-blue: #0d3978;
+  --border-radius: .3rem;
+}
 
-  html {
-    height: 100%;
-  }
+/*Styling for background image, making it fit the whole page*/
+html {
+  height: 100%;
+}
 
 .hero {
-    padding: 2% 3%;
-    background-color: var(--dark);
-    color: var(--primary);
-  }
+  padding: 2% 3%;
+  background-color: var(--dark);
+  color: var(--primary);
+}
 
-  .page-title {
-    font-size: 2.5rem;
-    background-color: var(--dark);
-    color: var(--light);
-    padding: 0 0;
-    display: flex;
-    justify-content: center;
-    border-radius: var(--border-radius);
-  }
+.page-title {
+  font-size: 3.5rem;
+  background-color: var(--dark);
+  color: var(--light);
+  padding: 0 0;
+  display: flex;
+  justify-content: center;
+  border-radius: var(--border-radius);
+}
 
-  .card {
-    background-color: #3889df; 
+/*forecast card styling*/
+.card {
+  background-color: #3889df; 
 }
 
 .card-header.date-header {
-    background-color: #9bcdff; 
-    font-size: 1.25rem; 
-    font-weight: bold; 
+  background-color: #9bcdff; 
+  font-size: 1.25rem; 
+  font-weight: bold; 
 }
 
 .card-body .card-text strong {
-    font-weight: bold; 
+  font-weight: bold; 
 }
-
+/*Current weather card styling*/
 #current-weather-card .card-text p strong {
   font-weight: bold;
 }
 
+.card-title {
+  font-size: 30px; 
+  color: white; 
+}
+
+/*buttons for past cities*/
 .city-button {
   display: block;
   width: 100%;
   margin-bottom: 5px; 
 }
 
+/*background image*/
 body {
   position: relative;
   margin: 0;

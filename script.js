@@ -59,32 +59,35 @@ function getGeoLocation(cityName) {
 
 //*getting weather data for the lat and lon of the city
 function getWeather(latitude, longitude, cityName) {
-    var apiKey = '91ce4240cdd8015ed3ef68dc83c67b37'; 
+    var apiKey = '91ce4240cdd8015ed3ef68dc83c67b37';
     var weatherApiURL = `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${apiKey}&units=imperial`;
-
+    var airQualityUrl = `http://api.openweathermap.org/data/2.5/air_pollution?lat=${latitude}&lon=${longitude}&appid=${apiKey}`;
     fetch(weatherApiURL)
     .then(response => response.json())
-    .then(data => {
-        if(data.cod === 200) {
-            displayCurrentWeather(data, cityName);
+    .then(weatherData => {
+        if(weatherData.cod === 200) {
+            return fetch(airQualityUrl)
+            .then(response => response.json())
+            .then(aqData => {
+                displayCurrentWeather(weatherData, cityName, aqData);
+            });
         } else {
-            console.error('Error fetching weather:', data.message);
+            console.error('Error fetching weather:', weatherData.message);
         }
     })
     .catch(error => {
-        console.error('Error fetching weather:', error);
+        console.error('Error fetching weather or air quality:', error);
     });
 }
 
-// Display the current weather data
-function displayCurrentWeather(data, cityName) {
+function displayCurrentWeather(weatherData, cityName, aqData) {
     var weatherCard = document.getElementById('current-weather-card');
-    var currentTemp = data.main.temp;
-    var windSpeed = data.wind.speed;
-    var humidity = data.main.humidity;
-    var iconCode = data.weather[0].icon;
+    var currentTemp = weatherData.main.temp; 
+    var windSpeed = weatherData.wind.speed;
+    var humidity = weatherData.main.humidity;
+    var iconCode = weatherData.weather[0].icon;
     var iconUrl = `http://openweathermap.org/img/wn/${iconCode}.png`;
-
+    var aqi = aqData.list[0].main.aqi; 
     var currentDate = new Date();
     var dateString = currentDate.toLocaleDateString('en-US', { month: 'long', day: 'numeric' });
 
@@ -94,6 +97,7 @@ function displayCurrentWeather(data, cityName) {
         <p><strong>Temperature:</strong> ${currentTemp}°F</p>
         <p><strong>Wind:</strong> ${windSpeed} MPH</p>
         <p><strong>Humidity:</strong> ${humidity}%</p>
+        <p><strong>Air Quality Index (AQI):</strong> ${aqi}</p> <!-- Added AQI -->
     `;
 }
 
@@ -117,7 +121,7 @@ function display5DayForecast(forecastData) {
     forecastContainer.innerHTML = ''; // Clear previous forecast cards
 
     const dailyForecasts = forecastData.list.filter((reading) => reading.dt_txt.includes('12:00:00'));
-    dailyForecasts.slice(0, 5).forEach((dailyData, index) => {
+    dailyForecasts.slice(0, 5).forEach((dailyData) => {
         const date = new Date(dailyData.dt_txt);
         const formattedDate = `${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}`;
         const iconCode = dailyData.weather[0].icon;
@@ -139,6 +143,7 @@ function display5DayForecast(forecastData) {
         forecastContainer.innerHTML += cardHtml;
     });
 }
+    
 //Setting the current weather card to have a prompt prior to entering a city so that it doesnt show a blank card with no weather
 function setDefaultWeatherCardText() {
     var weatherCard = document.getElementById('current-weather-card');
