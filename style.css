@@ -20,3 +20,21 @@
     justify-content: center;
     border-radius: var(--border-radius);
   }
+
+  .card {
+    background-color: #3889df; 
+}
+
+.card-header.date-header {
+    background-color: #9bcdff; 
+    font-size: 1.25rem; 
+    font-weight: bold; 
+}
+
+.card-body .card-text strong {
+    font-weight: bold; 
+}
+
+#current-weather-card .card-text p strong {
+  font-weight: bold;
+}

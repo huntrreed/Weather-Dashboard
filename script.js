@@ -16,20 +16,19 @@ function getGeoLocation(cityName) {
     .then(data => {
         if (data && data.length > 0) {
             const { lat, lon } = data[0];
-            getWeather(lat, lon);
+            getWeather(lat, lon, cityName);
             getForecast(lat, lon);
         } else {
-            console.error('Geolocation not found for the city of:', cityName);
+            console.error('Geolocation not found for the city:', cityName);
         }
     })
     .catch(error => {
         console.error('Error fetching location:', error);
     });
-
-
 }
+
 //*getting weather data for the lat and lon of the city
-function getWeather(latitude, longitude) {
+function getWeather(latitude, longitude, cityName) {
     var apiKey = '91ce4240cdd8015ed3ef68dc83c67b37'; 
     var weatherApiURL = `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${apiKey}&units=imperial`;
 
@@ -37,7 +36,7 @@ function getWeather(latitude, longitude) {
     .then(response => response.json())
     .then(data => {
         if(data.cod === 200) {
-            displayCurrentWeather(data);
+            displayCurrentWeather(data, cityName);
         } else {
             console.error('Error fetching weather:', data.message);
         }
@@ -47,20 +46,24 @@ function getWeather(latitude, longitude) {
     });
 }
 
-function displayCurrentWeather(weatherData) {
+// Display the current weather data
+function displayCurrentWeather(data, cityName) {
     var weatherCard = document.getElementById('current-weather-card');
-    var currentTemp = weatherData.main.temp;
-    var windSpeed = weatherData.wind.speed;
-    var humidity = weatherData.main.humidity;
-    var iconCode = weatherData.weather[0].icon;
+    var currentTemp = data.main.temp;
+    var windSpeed = data.wind.speed;
+    var humidity = data.main.humidity;
+    var iconCode = data.weather[0].icon;
     var iconUrl = `http://openweathermap.org/img/wn/${iconCode}.png`;
 
-    weatherCard.querySelector('.card-title').textContent = `Current Weather in ${weatherData.name}`;
+    var currentDate = new Date();
+    var dateString = currentDate.toLocaleDateString('en-US', { month: 'long', day: 'numeric' });
+
+    weatherCard.querySelector('.card-title').textContent = `Current Weather in ${cityName} on ${dateString}`;
     weatherCard.querySelector('.card-text').innerHTML = `
         <img src="${iconUrl}" alt="Weather icon">
-        <p>Temperature: ${currentTemp}°F</p>
-        <p>Wind: ${windSpeed} MPH</p>
-        <p>Humidity: ${humidity}%</p>
+        <p><strong>Temperature:</strong> ${currentTemp}°F</p>
+        <p><strong>Wind:</strong> ${windSpeed} MPH</p>
+        <p><strong>Humidity:</strong> ${humidity}%</p>
     `;
 }
 
@@ -92,13 +95,13 @@ function display5DayForecast(forecastData) {
 
         const cardHtml = `
             <div class="col">
-                <div class="card text-white bg-primary">
-                    <div class="card-header">${formattedDate}</div>
+                <div class="card">
+                    <div class="card-header date-header">${formattedDate}</div>
                     <div class="card-body">
                         <img src="${iconUrl}" alt="Weather icon">
-                        <p class="card-text">Temp: ${dailyData.main.temp}°F</p>
-                        <p class="card-text">Wind: ${dailyData.wind.speed} MPH</p>
-                        <p class="card-text">Humidity: ${dailyData.main.humidity}%</p>
+                        <p class="card-text"><strong>Temp:</strong> ${dailyData.main.temp}°F</p>
+                        <p class="card-text"><strong>Wind:</strong> ${dailyData.wind.speed} MPH</p>
+                        <p class="card-text"><strong>Humidity:</strong> ${dailyData.main.humidity}%</p>
                     </div>
                 </div>
             </div>
@@ -106,3 +109,12 @@ function display5DayForecast(forecastData) {
         forecastContainer.innerHTML += cardHtml;
     });
 }
+//Setting the current weather card to have a prompt prior to entering a city so that it doesnt show a blank card with no weather
+function setDefaultWeatherCardText() {
+    var weatherCard = document.getElementById('current-weather-card');
+    weatherCard.querySelector('.card-title').textContent = "Current Weather";
+    weatherCard.querySelector('.card-text').textContent = "Enter a city to see the weather and forecast!";
+}
+
+// Call the function when the page loads
+document.addEventListener('DOMContentLoaded', setDefaultWeatherCardText);
