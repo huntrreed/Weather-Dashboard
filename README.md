@@ -14,11 +14,11 @@ This application uses a weather API to display the current weather (temperature,
 
 Below is a screenshot giving an example of the initial page when you load the application.
 
-![Screenshot of initial page load for application.](./Assets/Basic.png)
+![Screenshot of initial page load for application.](./Assets/before.png)
 
 Here is an example of the data displayed when you search for a city. As you can see, previously searched cities such as "Glenwood Springs" and "Salt Lake City" appear under the search bar and can be easily clicked if you wanted to revisit the weather on that page, and the current city of Henniker, New Hampshire's weather is showing in the current weather box and 5 day forecast cards. 
 
-![Screenshot of page in action](./Assets/InAction.png)
+![Screenshot of page in action](./Assets/screenshot.png)
 
 ## Resources
 

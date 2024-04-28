@@ -1,7 +1,9 @@
 :root {
-  --dark: rgb(10, 10, 234);
-  --light: white;
-  --dark-blue: #0d3978;
+  --dark: #75A7AC;
+  --light: #EBD7C6;
+  --dark-blue: #126F74;
+  --green: #5C7039;
+  --lightgreen: #CFCB8B;
   --border-radius: .3rem;
 }
 
@@ -12,13 +14,13 @@ html {
 
 .hero {
   padding: 2% 3%;
-  background-color: var(--dark);
-  color: var(--primary);
+  background-color: var(--dark-blue);
+  color: var(--dark-blue);
 }
 
 .page-title {
   font-size: 3.5rem;
-  background-color: var(--dark);
+  background-color: var(--dark-blue);
   color: var(--light);
   padding: 0 0;
   display: flex;
@@ -28,11 +30,11 @@ html {
 
 /*forecast card styling*/
 .card {
-  background-color: #3889df; 
+  background-color: var(--green); 
 }
 
 .card-header.date-header {
-  background-color: #9bcdff; 
+  background-color: var(--lightgreen); 
   font-size: 1.25rem; 
   font-weight: bold; 
 }
@@ -73,14 +75,36 @@ body::before {
   right: 0;
   bottom: 0;
   left: 0;
-  background-image: url('./Assets/background.jpg'); 
+  background-color: var(--dark);
   background-size: cover;
   background-position: center;
-  opacity: 0.5; 
   z-index: -1; 
 }
 
 .content {
   position: relative;
   z-index: 1;
+}
+
+.form-control {
+  display: block;
+  padding: .375rem .75rem;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #212529;
+  background-color: white;
+  background-clip: padding-box;
+  border: 1px solid #ced4da;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  border-radius: .25rem;
+  transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+}
+
+.btn-secondary {
+  color: #fff;
+  background-color: var(--dark-blue);
+  border-color: var(--dark-blue);
 }
